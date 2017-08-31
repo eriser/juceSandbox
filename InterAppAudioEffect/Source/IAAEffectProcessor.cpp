@@ -43,10 +43,27 @@ IAAEffectProcessor::IAAEffectProcessor()
                                       nullptr);
 
     parameters.state = ValueTree (Identifier ("InterAppAudioEffect"));
+    
+    
+    // use a default samplerate and vector size here, reset it later
+    m_C74PluginState = (CommonState *)C74_GENPLUGIN::create(44100, 64);
+    C74_GENPLUGIN::reset(m_C74PluginState);
+    
+    m_InputBuffers = new t_sample *[C74_GENPLUGIN::num_inputs()];
+    m_OutputBuffers = new t_sample *[C74_GENPLUGIN::num_outputs()];
+    
+    for (int i = 0; i < C74_GENPLUGIN::num_inputs(); i++) {
+        m_InputBuffers[i] = NULL;
+    }
+    for (int i = 0; i < C74_GENPLUGIN::num_outputs(); i++) {
+        m_OutputBuffers[i] = NULL;
+    }
+    
 }
 
 IAAEffectProcessor::~IAAEffectProcessor()
 {
+    C74_GENPLUGIN::destroy(m_C74PluginState);
 }
 
 //==============================================================================
@@ -94,9 +111,14 @@ void IAAEffectProcessor::changeProgramName (int, const String&)
 }
 
 //==============================================================================
-void IAAEffectProcessor::prepareToPlay (double, int)
+void IAAEffectProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     previousGain = *parameters.getRawParameterValue ("gain");
+    
+    // initialize samplerate and vectorsize with the correct values
+    m_C74PluginState->sr = sampleRate;
+    m_C74PluginState->vs = samplesPerBlock;
+    
 }
 
 void IAAEffectProcessor::releaseResources()
@@ -126,27 +148,51 @@ void IAAEffectProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer&)
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
+    
+    // C74 Process code ---- start
+        assureBufferSize(buffer.getNumSamples());
+        
+        // fill input buffers
+        for (int i = 0; i < C74_GENPLUGIN::num_inputs(); i++) {
+            if (i < totalNumInputChannels) {
+                for (int j = 0; j < m_CurrentBufferSize; j++) {
+                    m_InputBuffers[i][j] = buffer.getReadPointer(i)[j];
+                }
+            } else {
+                memset(m_InputBuffers[i], 0, m_CurrentBufferSize *  sizeof(double));
+            }
+        }
+        
+        // process audio
+        C74_GENPLUGIN::perform(m_C74PluginState,
+                               m_InputBuffers,
+                               C74_GENPLUGIN::num_inputs(),
+                               m_OutputBuffers,
+                               C74_GENPLUGIN::num_outputs(),
+                               buffer.getNumSamples());
+        
+        // fill output buffers
+        for (int i = 0; i < totalNumOutputChannels; i++) {
+            if (i < C74_GENPLUGIN::num_outputs()) {
+                for (int j = 0; j < buffer.getNumSamples(); j++) {
+                    buffer.getWritePointer(i)[j] = m_OutputBuffers[i][j];
+                }
+            } else {
+                buffer.clear (i, 0, buffer.getNumSamples());
+            }
+        }
+    // C74 Process code ---- end
+    
+    
     // Apply the gain to the samples using a ramp to avoid discontinuities in
     // the audio between processed buffers.
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        
-        
-        // from the "processing audio input tutorial" -- start
-        const float* inBuffer = buffer.getReadPointer (channel, 0);
-        float* outBuffer = buffer.getWritePointer (channel, 0);
-        
-        for (int sample = 0; sample < numSamples; ++sample)
-            outBuffer[sample] = inBuffer[sample] * random.nextFloat();
-        
-        // from the "processing audio input tutorial" -- end
-        
         buffer.applyGainRamp (channel, 0, numSamples, previousGain, gain);
 
         meterListeners.call (&IAAEffectProcessor::MeterListener::handleNewMeterValue,
                              channel,
                              buffer.getMagnitude (channel, 0, numSamples));
-        
     }
 
     previousGain = gain;
@@ -204,4 +250,24 @@ bool IAAEffectProcessor::updateCurrentTimeInfoFromHost (AudioPlayHead::CurrentPo
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new IAAEffectProcessor();
+}
+
+
+//==============================================================================
+// C74 added methods
+
+void IAAEffectProcessor::assureBufferSize(long bufferSize)
+{
+    if (bufferSize > m_CurrentBufferSize) {
+        for (int i = 0; i < C74_GENPLUGIN::num_inputs(); i++) {
+            if (m_InputBuffers[i]) delete m_InputBuffers[i];
+            m_InputBuffers[i] = new t_sample[bufferSize];
+        }
+        for (int i = 0; i < C74_GENPLUGIN::num_outputs(); i++) {
+            if (m_OutputBuffers[i]) delete m_OutputBuffers[i];
+            m_OutputBuffers[i] = new t_sample[bufferSize];
+        }
+        
+        m_CurrentBufferSize = bufferSize;
+    }
 }
