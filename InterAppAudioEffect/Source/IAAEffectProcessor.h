@@ -30,6 +30,8 @@
 
 #include <array>
 
+#include "C74_GENPLUGIN.h"
+
 
 // A simple Inter-App Audio plug-in with a gain control and some meters.
 class IAAEffectProcessor  : public AudioProcessor

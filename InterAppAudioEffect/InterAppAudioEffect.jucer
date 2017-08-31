@@ -21,14 +21,36 @@
       <FILE id="CRAxnV" name="IAAEffectEditor.h" compile="0" resource="0"
             file="Source/IAAEffectEditor.h"/>
       <FILE id="xALLmD" name="SimpleMeter.h" compile="0" resource="0" file="Source/SimpleMeter.h"/>
+      <GROUP id="{9578B4D6-408A-AD44-4BA8-746BF2792FEA}" name="gen-exported-code">
+        <FILE id="xHudrW" name="C74_GENPLUGIN.cpp" compile="1" resource="0"
+              file="Source/gen-exported-code/C74_GENPLUGIN.cpp"/>
+        <FILE id="Uul5Uy" name="C74_GENPLUGIN.h" compile="0" resource="0" file="Source/gen-exported-code/C74_GENPLUGIN.h"/>
+        <FILE id="Y8QvBi" name="genlib.cpp" compile="1" resource="0" file="Source/gen-exported-code/genlib.cpp"/>
+        <FILE id="AEK9rP" name="genlib.h" compile="0" resource="0" file="Source/gen-exported-code/genlib.h"/>
+        <FILE id="TlkcnH" name="genlib_common.h" compile="0" resource="0" file="Source/gen-exported-code/genlib_common.h"/>
+        <FILE id="b85C6W" name="genlib_common_win.h" compile="0" resource="0"
+              file="Source/gen-exported-code/genlib_common_win.h"/>
+        <FILE id="CYU2kv" name="genlib_exportfunctions.h" compile="0" resource="0"
+              file="Source/gen-exported-code/genlib_exportfunctions.h"/>
+        <FILE id="Q9m3Ae" name="genlib_ops.h" compile="0" resource="0" file="Source/gen-exported-code/genlib_ops.h"/>
+        <FILE id="MDcCHq" name="genlib_platform.h" compile="0" resource="0"
+              file="Source/gen-exported-code/genlib_platform.h"/>
+        <FILE id="veVd2m" name="json.c" compile="1" resource="0" file="Source/gen-exported-code/json.c"/>
+        <FILE id="SA6t99" name="json.h" compile="0" resource="0" file="Source/gen-exported-code/json.h"/>
+        <FILE id="HxSKQD" name="json_builder.c" compile="1" resource="0" file="Source/gen-exported-code/json_builder.c"/>
+        <FILE id="OR4m1u" name="json_builder.h" compile="0" resource="0" file="Source/gen-exported-code/json_builder.h"/>
+      </GROUP>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_IPHONE targetFolder="Builds/iOS" iosScreenOrientation="portraitlandscape"
-                  microphonePermissionNeeded="1" iosBackgroundAudio="1" extraCompilerFlags="-Wall -Wshadow -Wno-missing-field-initializers -Wshadow -Wshorten-64-to-32 -Wstrict-aliasing -Wuninitialized -Wunused-parameter -Wconversion -Wsign-compare -Wint-conversion -Woverloaded-virtual -Wreorder -Wconstant-conversion -Wsign-conversion">
+                  microphonePermissionNeeded="1" iosBackgroundAudio="1" extraCompilerFlags="-Wall -Wshadow -Wno-missing-field-initializers -Wshadow -Wshorten-64-to-32 -Wstrict-aliasing -Wuninitialized -Wunused-parameter -Wconversion -Wsign-compare -Wint-conversion -Woverloaded-virtual -Wreorder -Wconstant-conversion -Wsign-conversion"
+                  customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist&gt;&#10;  &lt;dict&gt;&#10;    &lt;key&gt;LSRequiresIPhoneOS&lt;/key&gt;&#10;    &lt;true/&gt;&#10;    &lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;&#10;    &lt;string&gt;This app requires microphone input.&lt;/string&gt;&#10;    &lt;key&gt;UIViewControllerBasedStatusBarAppearance&lt;/key&gt;&#10;    &lt;false/&gt;&#10;    &lt;key&gt;CFBundleExecutable&lt;/key&gt;&#10;    &lt;string&gt;${EXECUTABLE_NAME}&lt;/string&gt;&#10;    &lt;key&gt;CFBundleIdentifier&lt;/key&gt;&#10;    &lt;string&gt;$(PRODUCT_BUNDLE_IDENTIFIER)&lt;/string&gt;&#10;    &lt;key&gt;CFBundleName&lt;/key&gt;&#10;    &lt;string&gt;genFX&lt;/string&gt;&#10;    &lt;key&gt;CFBundleDisplayName&lt;/key&gt;&#10;    &lt;string&gt;genFX&lt;/string&gt;&#10;    &lt;key&gt;CFBundlePackageType&lt;/key&gt;&#10;    &lt;string&gt;APPL&lt;/string&gt;&#10;    &lt;key&gt;CFBundleSignature&lt;/key&gt;&#10;    &lt;string&gt;????&lt;/string&gt;&#10;    &lt;key&gt;CFBundleShortVersionString&lt;/key&gt;&#10;    &lt;string&gt;1.0.0&lt;/string&gt;&#10;    &lt;key&gt;CFBundleVersion&lt;/key&gt;&#10;    &lt;string&gt;1.0.0&lt;/string&gt;&#10;    &lt;key&gt;NSHumanReadableCopyright&lt;/key&gt;&#10;    &lt;string&gt;jbloit&lt;/string&gt;&#10;    &lt;key&gt;NSHighResolutionCapable&lt;/key&gt;&#10;    &lt;true/&gt;&#10;    &lt;key&gt;UIRequiresFullScreen&lt;/key&gt;&#10;    &lt;true/&gt;&#10;    &lt;key&gt;UIStatusBarHidden&lt;/key&gt;&#10;    &lt;true/&gt;&#10;    &lt;key&gt;UISupportedInterfaceOrientations&lt;/key&gt;&#10;    &lt;array&gt;&#10;      &lt;string&gt;UIInterfaceOrientationPortrait&lt;/string&gt;&#10;      &lt;string&gt;UIInterfaceOrientationLandscapeLeft&lt;/string&gt;&#10;      &lt;string&gt;UIInterfaceOrientationLandscapeRight&lt;/string&gt;&#10;    &lt;/array&gt;&#10;    &lt;key&gt;UIBackgroundModes&lt;/key&gt;&#10;    &lt;array&gt;&#10;      &lt;string&gt;audio&lt;/string&gt;&#10;    &lt;/array&gt;&#10;    &lt;key&gt;AudioComponents&lt;/key&gt;&#10;    &lt;array&gt;&#10;      &lt;dict&gt;&#10;        &lt;key&gt;name&lt;/key&gt;&#10;        &lt;string&gt;ROLI Ltd.: InterAppAudioEffect&lt;/string&gt;&#10;        &lt;key&gt;manufacturer&lt;/key&gt;&#10;        &lt;string&gt;ROLI&lt;/string&gt;&#10;        &lt;key&gt;type&lt;/key&gt;&#10;        &lt;string&gt;aurx&lt;/string&gt;&#10;        &lt;key&gt;subtype&lt;/key&gt;&#10;        &lt;string&gt;IAAE&lt;/string&gt;&#10;        &lt;key&gt;version&lt;/key&gt;&#10;        &lt;integer&gt;65536&lt;/integer&gt;&#10;      &lt;/dict&gt;&#10;    &lt;/array&gt;&#10;  &lt;/dict&gt;&#10;&lt;/plist&gt;&#10;">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="InterAppAudioEffect"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="InterAppAudioEffect"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="GenFX"
+                       headerPath="$(PROJECT_DIR)/../../Source/gen-exported-code&#10;"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="InterAppAudioEffect"
+                       headerPath="$(PROJECT_DIR)/../../Source/gen-exported-code&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../modules"/>
